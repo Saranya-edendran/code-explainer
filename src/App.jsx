@@ -118,7 +118,7 @@ export default function App() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("http://localhost:8000/explain", {
+      const res = await fetch("https://code-explainer-q54y.onrender.com/explain", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, level }),
