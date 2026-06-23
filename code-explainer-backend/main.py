@@ -25,37 +25,41 @@ class CodeRequest(BaseModel):
 @app.post("/explain")
 def explain_code(request: CodeRequest):
     prompt = f"""
-    You are an expert programming teacher.
+    You are an expert programming teacher and code analyzer.
     Analyze this code and explain it for a {request.level} level programmer.
-    
+
     Respond in EXACTLY this format:
     SUMMARY: <one paragraph summary of what the code does>
     EXPLANATION: <line by line explanation>
     ISSUES: <any bugs or potential problems, or "No issues found">
     IMPROVEMENTS: <suggestions to improve the code>
-    
+    COMPLEXITY: <time complexity like O(n), O(n²) and space complexity, with simple explanation>
+    TESTCASES: <write 3 test cases for this code with input and expected output>
+
     Code to analyze:
     {request.code}
     """
-    
+
     response = client.chat.completions.create(
-       model="llama-3.3-70b-versatile",
+        model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=1500
     )
-    
+
     text = response.choices[0].message.content
-    
+
     def extract(tag):
-        tags = ["SUMMARY:", "EXPLANATION:", "ISSUES:", "IMPROVEMENTS:"]
+        tags = ["SUMMARY:", "EXPLANATION:", "ISSUES:", "IMPROVEMENTS:", "COMPLEXITY:", "TESTCASES:"]
         start = text.find(f"{tag}:") + len(f"{tag}:")
         next_tags = [t for t in tags if t != f"{tag}:" and text.find(t) > text.find(f"{tag}:")]
         end = min([text.find(t) for t in next_tags], default=len(text))
         return text[start:end].strip()
-    
+
     return {
         "summary": extract("SUMMARY"),
         "explanation": extract("EXPLANATION"),
         "issues": extract("ISSUES"),
-        "improvements": extract("IMPROVEMENTS")
+        "improvements": extract("IMPROVEMENTS"),
+        "complexity": extract("COMPLEXITY"),
+        "testcases": extract("TESTCASES")
     }

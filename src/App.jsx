@@ -37,20 +37,7 @@ const styles = `
     letter-spacing: -0.3px;
   }
 
-  .nav-logo span {
-    color: #6366f1;
-  }
-
-  .nav-badge {
-    font-size: 11px;
-    font-weight: 500;
-    color: #6366f1;
-    border: 1px solid rgba(99,102,241,0.3);
-    padding: 4px 10px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
+  .nav-logo span { color: #6366f1; }
 
   .hero {
     text-align: center;
@@ -97,12 +84,7 @@ const styles = `
     gap: 8px;
   }
 
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-  }
-
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
   .dot-red { background: #ff5f57; }
   .dot-yellow { background: #febc2e; }
   .dot-green { background: #28c840; }
@@ -243,6 +225,8 @@ const styles = `
   .tag-explanation { background: rgba(16,185,129,0.1); color: #10b981; }
   .tag-issues { background: rgba(245,158,11,0.1); color: #f59e0b; }
   .tag-improvements { background: rgba(139,92,246,0.1); color: #8b5cf6; }
+  .tag-complexity { background: rgba(236,72,153,0.1); color: #ec4899; }
+  .tag-testcases { background: rgba(20,184,166,0.1); color: #14b8a6; }
 
   .result-block-body {
     padding: 18px;
@@ -250,6 +234,7 @@ const styles = `
     line-height: 1.8;
     color: #94a3b8;
     white-space: pre-wrap;
+    font-family: inherit;
   }
 
   @media (max-width: 600px) {
@@ -289,7 +274,6 @@ export default function App() {
       <div className="page">
         <nav className="nav">
           <div className="nav-logo">code<span>.</span>explain</div>
-         
         </nav>
 
         <div className="hero">
@@ -365,6 +349,18 @@ export default function App() {
                 <span className="result-tag tag-improvements">Improvements</span>
               </div>
               <div className="result-block-body">{result.improvements}</div>
+            </div>
+            <div className="result-block">
+              <div className="result-block-header">
+                <span className="result-tag tag-complexity">Complexity</span>
+              </div>
+              <div className="result-block-body">{result.complexity}</div>
+            </div>
+            <div className="result-block">
+              <div className="result-block-header">
+                <span className="result-tag tag-testcases">Test Cases</span>
+              </div>
+              <div className="result-block-body">{result.testcases}</div>
             </div>
           </div>
         )}
